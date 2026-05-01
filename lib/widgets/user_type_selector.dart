@@ -20,7 +20,7 @@ class UserTypeSelector extends StatelessWidget {
       height: r.isMobile ? 40 : 44,
       decoration: BoxDecoration(
         color: AppTheme.lightGrey,
-        borderRadius: BorderRadius.circular(50), // 🔥 cápsula
+        borderRadius: BorderRadius.circular(50), // 
       ),
       padding: const EdgeInsets.all(4),
       child: Stack(
