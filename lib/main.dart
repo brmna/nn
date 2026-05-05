@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'screens/register_screen.dart';
 import 'screens/login_screen.dart';
 import 'theme/app_theme.dart';
+import 'screens/profile_screen.dart';
 
 void main() {
   runApp(const BeautyApp());
@@ -16,10 +17,11 @@ class BeautyApp extends StatelessWidget {
       title: 'Beauty App',
       debugShowCheckedModeBanner: false,
       theme: AppTheme.lightTheme,
-      initialRoute: '/login',
+      initialRoute: '/reservation',
       routes: {
         '/login': (context) => const LoginScreen(),
         '/register': (context) => const RegisterScreen(),
+        '/reservation': (context) => const ProfileScreen(),
       },
     );
   }
