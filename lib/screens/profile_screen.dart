@@ -6,7 +6,6 @@ class ProfileScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // Un color de fondo ligeramente grisaceo como en tu diseño
       backgroundColor: const Color(0xFFF8F9FA),
       appBar: AppBar(
         backgroundColor: Colors.transparent,
@@ -18,7 +17,6 @@ class ProfileScreen extends StatelessWidget {
             child: IconButton(
               icon: const Icon(Icons.arrow_back, color: Colors.black),
               onPressed: () {
-                // Acción para volver atrás
               },
             ),
           ),
@@ -29,31 +27,27 @@ class ProfileScreen extends StatelessWidget {
           children: [
             const SizedBox(height: 20),
             _buildProfileHeader(),
-            const SizedBox(height: 24), // Espacio extra
-            _buildActionButtons(), // <- NUEVO
-            const SizedBox(height: 24), // Espacio extra
-            _buildTabs(), // <- NUEVO
+            const SizedBox(height: 24),
+            _buildActionButtons(),
+            const SizedBox(height: 24), 
+            _buildTabs(), 
             const SizedBox(height: 20),
-            _buildServicesList(),
+            _buildServicesList(context),
             const SizedBox(height: 40),
-            // Aquí irá la lista de servicios en el siguiente paso
           ],
         ),
       ),
     );
   }
 
-  // Extraemos el encabezado en su propio método para mantener el código limpio
   Widget _buildProfileHeader() {
     return Column(
       children: [
-        // Stack nos permite poner el ícono de verificado sobre la foto
         Stack(
           alignment: Alignment.bottomRight,
           children: [
             const CircleAvatar(
               radius: 50,
-              // Puedes cambiar esta URL por una imagen local usando AssetImage
               backgroundImage: NetworkImage('https://i.pravatar.cc/300'),
             ),
             Container(
@@ -70,7 +64,6 @@ class ProfileScreen extends StatelessWidget {
         ),
         const SizedBox(height: 16),
 
-        // Nombre
         const Text(
           'María González',
           style: TextStyle(
@@ -97,7 +90,6 @@ class ProfileScreen extends StatelessWidget {
         ),
         const SizedBox(height: 8),
 
-        // Ubicación
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
@@ -113,13 +105,11 @@ class ProfileScreen extends StatelessWidget {
     );
   }
 
-  // Método para los botones de Chatear y Llamar
   Widget _buildActionButtons() {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 20.0),
       child: Row(
         children: [
-          // Expanded hace que el botón tome la mitad del ancho
           Expanded(
             child: OutlinedButton.icon(
               onPressed: () {},
@@ -141,8 +131,7 @@ class ProfileScreen extends StatelessWidget {
               ),
             ),
           ),
-          const SizedBox(width: 12), // Espacio entre los botones
-          // El otro botón toma la otra mitad
+          const SizedBox(width: 12), 
           Expanded(
             child: OutlinedButton.icon(
               onPressed: () {},
@@ -246,19 +235,21 @@ class ProfileScreen extends StatelessWidget {
   }
 
   // Método que agrupa todas las tarjetas
-  Widget _buildServicesList() {
+  Widget _buildServicesList(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 20.0),
       child: Column(
         children: [
           _buildServiceCard(
+            context: context,
             title: 'Manicura Básica',
             price: '\$250',
             description: 'Limado, cutícula, hidratación y esmaltado',
             duration: '45 min',
           ),
-          const SizedBox(height: 16), // Espacio entre tarjetas
+          const SizedBox(height: 16), 
           _buildServiceCard(
+            context: context,
             title: 'Manicura Francesa',
             price: '\$350',
             description: 'Manicura francesa clásica con acabado perfecto',
@@ -266,6 +257,7 @@ class ProfileScreen extends StatelessWidget {
           ),
           const SizedBox(height: 16),
           _buildServiceCard(
+            context: context,
             title: 'Uñas de Gel',
             price: '\$500',
             description: 'Aplicación de gel con acabado duradero',
@@ -273,6 +265,7 @@ class ProfileScreen extends StatelessWidget {
           ),
           const SizedBox(height: 16),
           _buildServiceCard(
+            context: context,
             title: 'Nail Art Personalizado',
             price: '\$700',
             description: 'Diseño personalizado según tus preferencias',
@@ -283,8 +276,8 @@ class ProfileScreen extends StatelessWidget {
     );
   }
 
-  // Método REUTILIZABLE para construir una tarjeta individual
   Widget _buildServiceCard({
+    required BuildContext context,
     required String title,
     required String price,
     required String description,
@@ -295,13 +288,11 @@ class ProfileScreen extends StatelessWidget {
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(16),
-        // Borde gris muy clarito para enmarcar la tarjeta
         border: Border.all(color: Colors.grey.shade200),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          // Fila superior: Título y Precio
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
@@ -310,7 +301,7 @@ class ProfileScreen extends StatelessWidget {
                 style: const TextStyle(
                   fontSize: 15,
                   fontWeight: FontWeight.bold,
-                  fontFamily: 'Georgia', // La misma fuente serif del nombre
+                  fontFamily: 'Georgia', 
                 ),
               ),
               Text(
@@ -325,18 +316,15 @@ class ProfileScreen extends StatelessWidget {
           ),
           const SizedBox(height: 8),
 
-          // Descripción
           Text(
             description,
             style: TextStyle(color: Colors.grey[500], fontSize: 13),
           ),
 
           const SizedBox(height: 16),
-          // Línea divisoria muy tenue
           Divider(color: Colors.grey.shade100, height: 1, thickness: 1),
           const SizedBox(height: 16),
 
-          // Fila inferior: Duración y Botón Reservar
           Row(
             children: [
               Icon(Icons.access_time, size: 16, color: Colors.grey[500]),
@@ -346,12 +334,21 @@ class ProfileScreen extends StatelessWidget {
                 style: TextStyle(color: Colors.grey[500], fontSize: 13),
               ),
 
-              const Spacer(), // Este widget mágico empuja el botón a la derecha
+              const Spacer(), 
 
               ElevatedButton.icon(
                 onPressed: () {
-                  // TODO: Aquí llamaremos al Bottom Sheet en el Paso 4
-                  print('Botón presionado: Reservar $title');
+                  showModalBottomSheet(
+                    context: context,
+                    isScrollControlled:
+                        true, 
+                    backgroundColor: Colors
+                        .transparent,
+                    builder: (context) => ReservationBottomSheet(
+                      serviceName: title,
+                      price: price,
+                    ),
+                  );
                 },
                 icon: const Icon(
                   Icons.calendar_today,
@@ -363,7 +360,7 @@ class ProfileScreen extends StatelessWidget {
                   style: TextStyle(color: Colors.white),
                 ),
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.black, // Fondo negro del botón
+                  backgroundColor: Colors.black, 
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(20),
                   ),
@@ -371,12 +368,208 @@ class ProfileScreen extends StatelessWidget {
                     horizontal: 16,
                     vertical: 8,
                   ),
-                  elevation: 0, // Sin sombra para un look plano
+                  elevation: 0, 
                 ),
               ),
             ],
           ),
         ],
+      ),
+    );
+  }
+}
+
+class ReservationBottomSheet extends StatefulWidget {
+  final String serviceName;
+  final String price;
+
+  const ReservationBottomSheet({
+    super.key,
+    required this.serviceName,
+    required this.price,
+  });
+
+  @override
+  State<ReservationBottomSheet> createState() => _ReservationBottomSheetState();
+}
+
+class _ReservationBottomSheetState extends State<ReservationBottomSheet> {
+  int selectedDateIndex = 0;
+  int selectedTimeIndex =
+      1;
+
+  final List<Map<String, String>> dates = [
+    {'day': 'mié', 'number': '25'},
+    {'day': 'jue', 'number': '26'},
+    {'day': 'vie', 'number': '27'},
+  ];
+  final List<String> times = ['10:00', '11:30', '14:00', '16:30'];
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      height:
+          MediaQuery.of(context).size.height *
+          0.85, 
+      decoration: const BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.only(
+          topLeft: Radius.circular(24),
+          topRight: Radius.circular(24),
+        ),
+      ),
+      child: Padding(
+        padding: const EdgeInsets.all(24.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            // Botón de cerrar y Título
+            Stack(
+              children: [
+                Align(
+                  alignment: Alignment.centerRight,
+                  child: GestureDetector(
+                    onTap: () => Navigator.pop(context), // Cierra la ventana
+                    child: const Icon(
+                      Icons.close,
+                      size: 20,
+                      color: Colors.grey,
+                    ),
+                  ),
+                ),
+                Center(
+                  child: Column(
+                    children: [
+                      Text(
+                        'Reservar ${widget.serviceName}',
+                        style: const TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
+                          fontFamily: 'Georgia',
+                        ),
+                      ),
+                      const SizedBox(height: 4),
+                      Text(
+                        'Selecciona la fecha y hora para tu cita',
+                        style: TextStyle(color: Colors.grey[600], fontSize: 13),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+            const SizedBox(height: 30),
+
+            // FECHAS
+            const Text(
+              'Fecha disponible',
+              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14),
+            ),
+            const SizedBox(height: 12),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: List.generate(dates.length, (index) {
+                return _buildDateBox(
+                  index,
+                  dates[index]['day']!,
+                  dates[index]['number']!,
+                );
+              }),
+            ),
+            const SizedBox(height: 24),
+
+            // HORARIOS
+            const Text(
+              'Horario disponible',
+              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14),
+            ),
+            const SizedBox(height: 12),
+            Wrap(
+              spacing: 12, 
+              runSpacing: 12, 
+              children: List.generate(times.length, (index) {
+                return _buildTimeBox(index, times[index]);
+              }),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildDateBox(int index, String day, String number) {
+    bool isSelected = selectedDateIndex == index; 
+
+    return GestureDetector(
+      onTap: () {
+        setState(() {
+          selectedDateIndex = index;
+        });
+      },
+      child: Container(
+        width: 100,
+        padding: const EdgeInsets.symmetric(vertical: 12),
+        decoration: BoxDecoration(
+          color: isSelected ? Colors.grey[500] : Colors.white,
+          borderRadius: BorderRadius.circular(12),
+          border: Border.all(
+            color: isSelected ? Colors.black : Colors.grey.shade300,
+            width: 1,
+          ),
+        ),
+        child: Column(
+          children: [
+            Text(
+              day,
+              style: TextStyle(
+                color: isSelected ? Colors.black87 : Colors.grey[600],
+                fontSize: 12,
+              ),
+            ),
+            const SizedBox(height: 4),
+            Text(
+              number,
+              style: TextStyle(
+                color: isSelected ? Colors.black : Colors.black,
+                fontSize: 18,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildTimeBox(int index, String time) {
+    bool isSelected = selectedTimeIndex == index;
+
+    return GestureDetector(
+      onTap: () {
+        setState(() {
+          selectedTimeIndex = index;
+        });
+      },
+      child: Container(
+        width: 100,
+        padding: const EdgeInsets.symmetric(vertical: 12),
+        decoration: BoxDecoration(
+          color: isSelected ? Colors.grey[500] : Colors.white,
+          borderRadius: BorderRadius.circular(12),
+          border: Border.all(
+            color: isSelected ? Colors.black : Colors.grey.shade300,
+            width: 1,
+          ),
+        ),
+        child: Center(
+          child: Text(
+            time,
+            style: TextStyle(
+              color: isSelected ? Colors.black : Colors.black,
+              fontWeight: isSelected ? FontWeight.bold : FontWeight.normal,
+            ),
+          ),
+        ),
       ),
     );
   }
