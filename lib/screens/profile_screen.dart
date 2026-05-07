@@ -69,7 +69,7 @@ class ProfileScreen extends StatelessWidget {
           style: TextStyle(
             fontSize: 26,
             fontWeight: FontWeight.w500,
-            fontFamily: 'Georgia', // Una fuente serif similar a la de tu imagen
+            fontFamily: 'Georgia', 
           ),
         ),
         const SizedBox(height: 8),
@@ -158,7 +158,6 @@ class ProfileScreen extends StatelessWidget {
     );
   }
 
-  // Método para la barra de Info / Servicios / Portafolio
   Widget _buildTabs() {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 20.0),
@@ -234,7 +233,6 @@ class ProfileScreen extends StatelessWidget {
     );
   }
 
-  // Método que agrupa todas las tarjetas
   Widget _buildServicesList(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 20.0),
@@ -395,8 +393,7 @@ class ReservationBottomSheet extends StatefulWidget {
 
 class _ReservationBottomSheetState extends State<ReservationBottomSheet> {
   int selectedDateIndex = 0;
-  int selectedTimeIndex =
-      1;
+  int selectedTimeIndex = 1;
 
   final List<Map<String, String>> dates = [
     {'day': 'mié', 'number': '25'},
@@ -408,9 +405,7 @@ class _ReservationBottomSheetState extends State<ReservationBottomSheet> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height:
-          MediaQuery.of(context).size.height *
-          0.85, 
+      height: MediaQuery.of(context).size.height * 0.85, 
       decoration: const BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.only(
@@ -423,13 +418,12 @@ class _ReservationBottomSheetState extends State<ReservationBottomSheet> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // Botón de cerrar y Título
             Stack(
               children: [
                 Align(
                   alignment: Alignment.centerRight,
                   child: GestureDetector(
-                    onTap: () => Navigator.pop(context), // Cierra la ventana
+                    onTap: () => Navigator.pop(context), 
                     child: const Icon(
                       Icons.close,
                       size: 20,
@@ -491,6 +485,72 @@ class _ReservationBottomSheetState extends State<ReservationBottomSheet> {
                 return _buildTimeBox(index, times[index]);
               }),
             ),
+            const SizedBox(height: 24),
+
+            // MÉTODO DE PAGO
+            const Text(
+              'Método de pago', 
+              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14)
+            ),
+            const SizedBox(height: 12),
+            Container(
+              padding: const EdgeInsets.all(16),
+              decoration: BoxDecoration(
+                border: Border.all(color: Colors.grey.shade300),
+                borderRadius: BorderRadius.circular(12),
+              ),
+              child: Row(
+                children: [
+                  const Icon(Icons.credit_card, color: Colors.black),
+                  const SizedBox(width: 12),
+                  const Text('**** **** **** 4242', style: TextStyle(fontWeight: FontWeight.w500)),
+                  const Spacer(),
+                  Text(
+                    'Cambiar',
+                    style: TextStyle(
+                      color: Colors.grey[600], 
+                      decoration: TextDecoration.underline,
+                      fontSize: 13,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+
+            const Spacer(), 
+
+            SizedBox(
+              width: double.infinity, 
+              child: ElevatedButton(
+                onPressed: () {
+                  Navigator.pop(context); 
+
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(
+                      content: Text('¡Cita para ${widget.serviceName} confirmada!'),
+                      backgroundColor: Colors.green,
+                      behavior: SnackBarBehavior.floating,
+                    ),
+                  );
+                },
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.black,
+                  padding: const EdgeInsets.symmetric(vertical: 16),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(25),
+                  ),
+                ),
+                child: Text(
+                  'Confirmar reserva - ${widget.price}',
+                  style: const TextStyle(
+                    color: Colors.white, 
+                    fontSize: 16, 
+                    fontWeight: FontWeight.bold
+                  ),
+                ),
+              ),
+            ),
+            const SizedBox(height: 16),
           ],
         ),
       ),
